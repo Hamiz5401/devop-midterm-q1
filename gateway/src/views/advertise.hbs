@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
 
-        <title>FlixTube: Home</title>
+        <title>FlixTube: Advertise</title>
 
         <link rel="stylesheet" href="css/tailwind.min.css">
         <link rel="stylesheet" href="css/app.css">
@@ -15,7 +15,7 @@
                     <div class="text-xl font-bold">
                         FlixTube
                     </div>
-                    <div class="ml-16 border-b-2 border-blue-600">
+                    <div class="ml-16">
                         <a href="/">Videos</a>
                     </div>
                     <div class="ml-4">
@@ -24,24 +24,23 @@
                     <div class="ml-4">
                         <a href="/history">History</a>
                     </div>
-                    <div class="ml-4">
+                    <div class="ml-4 border-b-2 border-blue-600">
                         <a href="/advertise">Advertise</a>
                     </div>
                 </div>
             </div>
 
             <div class="m-4">
-                <h1>Videos</h1>
-                <div id="video-list" class="m-4">
-                    {{#if videos}}
-                        {{#each videos}}
-                            <div class="mt-1">
-                                <a href="/video?id={{this._id}}">{{this.name}}</a> 
-                            </div>
-                        {{/each}}
-                    {{else}}
-                        No videos uploaded yet.
-                    {{/if}}
+                <h1>Advertisements</h1>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    {{#each ads}}
+                    <div class="border p-4 rounded-lg shadow-md hover:shadow-xl transition-shadow">
+                        <p>{{this.name}}</p>
+                        <img src="{{this.imageUrl}}" alt="{{this.name}}" class="w-full h-48 object-cover rounded-md mb-4">
+                        <h2 class="text-lg font-bold">{{this.name}}</h2>
+                        <a href="{{this.link}}" target="_blank" class="text-blue-600 hover:underline">Shop Now</a>
+                    </div>
+                    {{/each}}
                 </div>
             </div>
         </div>

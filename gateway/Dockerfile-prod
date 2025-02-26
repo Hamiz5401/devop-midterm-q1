@@ -8,4 +8,5 @@ COPY ./public ./public
 
 CMD npx wait-port metadata:80 && \
     npx wait-port history:80 && \
+    npx wait-port advertise:80 && \
     npm start

@@ -23,8 +23,7 @@ async function main() {
     // Main web page that lists videos.
     //
     app.get("/", async (req, res) => {
-
-        // Retreives the list of videos from the metadata microservice.
+        // Retrieves the list of videos from the metadata microservice.
         const videosResponse = await axios.get("http://metadata/videos");
 
         // Renders the video list for display in the browser.
@@ -35,10 +34,9 @@ async function main() {
     // Web page to play a particular video.
     //
     app.get("/video", async (req, res) => {
-
         const videoId = req.query.id;
 
-        // Retreives the data from the metadata microservice.
+        // Retrieves the data from the metadata microservice.
         const videoResponse = await axios.get(`http://metadata/video?id=${videoId}`);
 
         const video = {
@@ -61,8 +59,7 @@ async function main() {
     // Web page to show the users viewing history.
     //
     app.get("/history", async (req, res) => {
-
-        // Retreives the data from the history microservice.
+        // Retrieves the data from the history microservice.
         const historyResponse = await axios.get("http://history/history");
 
         // Renders the history for display in the browser.
@@ -73,7 +70,6 @@ async function main() {
     // HTTP GET route that streams video to the user's browser.
     //
     app.get("/api/video", async (req, res) => {
-
         const response = await axios({ // Forwards the request to the video-streaming microservice.
             method: "GET",
             url: `http://video-streaming/video?id=${req.query.id}`, 
@@ -87,7 +83,6 @@ async function main() {
     // HTTP POST route to upload video from the user's browser.
     //
     app.post("/api/upload", async (req, res) => {
-
         const response = await axios({ // Forwards the request to the video-upload microservice.
             method: "POST",
             url: "http://video-upload/upload", 
@@ -99,6 +94,24 @@ async function main() {
             },
         });
         response.data.pipe(res);
+    });
+
+    //
+    // Web page to display advertisements.
+    //
+    app.get("/advertise", async (req, res) => {
+        try {
+            // Retrieves the advertisements from the advertise microservice.
+            const adsResponse = await axios.get("http://advertise/advertise");
+
+            console.log("adsResponse.data.ads:", adsResponse.data);
+
+            // Renders the advertisements for display in the browser.
+            res.render("advertise", { ads: adsResponse.data });
+        } catch (error) {
+            console.error("Failed to retrieve advertisements:", error.message);
+            res.status(500).send(error.message);
+        }
     });
 
     app.listen(PORT, () => {

@@ -20,7 +20,7 @@ spec:
     spec:
       containers: 
       - name: history
-        image: $CONTAINER_REGISTRY/history:1
+        image: flixtubekitti.azurecr.io/history:1
         imagePullPolicy: IfNotPresent
         env:
         - name: PORT

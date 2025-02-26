@@ -1,27 +1,22 @@
-#
-# To deploy:
-#
-# kubectl apply -f scripts/deploy.yaml
-#
-#
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: metadata
+  name: advertise-deployment
+  labels:
+    app: advertise
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: metadata
+      app: advertise
   template:
     metadata:
       labels:
-        app: metadata
+        app: advertise
     spec:
-      containers: 
-      - name: metadata
-        image: flixtubekitti.azurecr.io/metadata:1
-        imagePullPolicy: IfNotPresent
+      containers:
+      - name: advertise
+        image: flixtubekitti.azurecr.io/advertise:1
         env:
         - name: PORT
           value: "4000"
@@ -31,14 +26,15 @@ spec:
           value: metadata
         - name: RABBIT
           value: amqp://test:test@rabbit:5672
+        imagePullPolicy: Always
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: metadata
+  name: advertise
 spec:
   selector:
-    app: metadata
+    app: advertise
   type: ClusterIP
   ports:
     - protocol: TCP
